@@ -11,6 +11,7 @@ class Server{
 		sf::TcpSocket socket;
 		sf::Packet packet;
 		std::string message;
+		sf::Event event;
 	public:
 		Server(){
 			listener.listen(55001);
@@ -18,12 +19,13 @@ class Server{
 			cout<<"New client connected: "<<socket.getRemoteAddress()<<endl;
 		}
 		void Send(){
-			cout<<"Enter the message: ";
-			cin>>message;
-			cout<<endl;
-			packet<<message;
-			socket.send(packet);
-			packet.clear();
+					cout<<"Enter the message: ";
+					getline(cin, message);
+					cout<<endl;
+					//message = static_cast<char>(event.text.unicode);
+					packet<<message;
+					socket.send(packet);
+					packet.clear();
 		}
 		void Receive(){
 			socket.receive(packet);
@@ -38,6 +40,7 @@ class Client{
 		sf::TcpSocket socket;
 		std::string message;
 		sf::Packet packet;
+		sf::Event event;
 	public:
 		Client(){
 			cout<<"Enter the ip address: ";
@@ -47,11 +50,12 @@ class Client{
 		}
 		void Send(){
 			cout<<"Enter the message: ";
-			getline(cin, message);
-			cout<<endl;
-			packet<<message;
-			socket.send(packet);
-			packet.clear();
+				getline(cin, message);
+				cout<<endl;
+			//message = static_cast<char>(event.text.unicode);
+				packet<<message;
+				socket.send(packet);
+				packet.clear();
 		}
 		void Receive(){
 			socket.receive(packet);
